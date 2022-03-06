@@ -1,0 +1,7 @@
+{
+  "name": "fragment-error",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "react"
+}
