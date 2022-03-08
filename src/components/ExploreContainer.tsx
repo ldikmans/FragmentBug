@@ -3,6 +3,7 @@ import { Fragment, useEffect, useState } from 'react';
 import ButtonOnModal from './ButtonOnModal';
 import CardOnly from './CardOnly';
 import CardWithOverlay from './CardWithOverlay';
+import CardWithOverlayWithMemoryLeak from './CardWithOverlayWithMemoryLeak';
 import './ExploreContainer.css';
 import FragmentWithCardAndModal from './FragmentWithCardAndModal';
 
@@ -14,7 +15,8 @@ const ExploreContainer: React.FC<ContainerProps> = () => {
   const [showFragmentWithCardAndModal, setShowFragmentWithCardAndModal] = useState(true);
   const [showContainerModal, setShowContainerModal] = useState(false);
   const [showCardOnly, setShowCardOnly] = useState(true);
-  const [showCardWithOverlay, setShowCardWithOverlay] = useState(true)
+  const [showCardWithOverlay, setShowCardWithOverlay] = useState(true);
+  const [showCardWithOverlayMemoryLeak, setShowCardWithOverlayMemoryLeak] = useState(true);
 
   function hideFragmentwithCardAndModal() {
     setShowFragmentWithCardAndModal(false);
@@ -25,13 +27,17 @@ const ExploreContainer: React.FC<ContainerProps> = () => {
   }
 
   async function hideCardWithOverlay(){
-    
+
     const card = document.getElementById('card-overlay') as HTMLElement;
     //can't use this because a memory leak occurs
     //setShowCardWithOverlay(false);
     if(card){
       card.style.display='none';
     }
+  }
+
+  async function hideCardWithOverlayMemoryLeak(){
+    setShowCardWithOverlayMemoryLeak(false);
   }
 
   return (
@@ -48,6 +54,10 @@ const ExploreContainer: React.FC<ContainerProps> = () => {
         {
           showCardWithOverlay && 
             <CardWithOverlay hideCard={hideCardWithOverlay}/>
+        }
+        {
+          showCardWithOverlayMemoryLeak && 
+          <CardWithOverlayWithMemoryLeak hideCard={hideCardWithOverlayMemoryLeak}/>
         }
 
       </IonGrid>
