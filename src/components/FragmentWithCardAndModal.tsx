@@ -1,7 +1,7 @@
 import { IonButton, IonCard, IonContent, IonHeader, IonIcon, IonItem, IonLabel, IonModal, IonTitle, IonToolbar } from '@ionic/react';
 import {closeSharp, notificationsCircleOutline } from 'ionicons/icons';
 import React, { useState, Fragment } from 'react';
-import ButtonOnCard from './ButtonOnCard';
+import ButtonOnModal from './ButtonOnModal';
 
 interface ContainerProps {
     hideCard: Function
@@ -23,15 +23,15 @@ const FragmentWithCardAndModal: React.FC<ContainerProps> = ({ hideCard }) => {
     return (
 
         <Fragment>
-            <IonCard className="ion-no-padding" id="notification-card" button={true} onClick={() => showNotificationInformation()}>
-                <IonItem id="notification-card-header-item" lines="none" className="ion-no-padding ion-no-margin notification-card-item">
-                    <IonLabel id="notification-card-header-label-text" className="ion-text-left ion-no-padding ion-no-margin">Card with modal</IonLabel>
-                    <IonButton id="notification-card-button-close" className="ion-no-padding ion-no-margin" onClick={(event) => handleCloseCard(event)}>
-                        <IonIcon id="notification-card-icon-close" icon={closeSharp}></IonIcon>
+            <IonCard  button={true} onClick={() => showNotificationInformation()}>
+                <IonItem  lines="none">
+                    <IonLabel>Card with modal</IonLabel>
+                    <IonButton onClick={(event) => handleCloseCard(event)}>
+                        <IonIcon icon={closeSharp}></IonIcon>
                     </IonButton>
                 </IonItem>
-                <IonItem lines="none" id="notification-card-content-item" class="ion-no-padding ion-no-margin notification-card-item" >
-                    <IonLabel id="notification-card-body" class="ion-no-padding ion-no-margin ion-text-wrap notification-card-item">Clicking on it will open the modal that is part of the fragment. The button on the modal gives an error</IonLabel>
+                <IonItem lines="none" >
+                    <IonLabel>Clicking on it will open the modal that is part of the fragment. The button on the modal gives an error</IonLabel>
                 </IonItem>
             </IonCard>
 
@@ -54,7 +54,7 @@ const FragmentWithCardAndModal: React.FC<ContainerProps> = ({ hideCard }) => {
                         </IonLabel>
                     </IonItem>
                 </IonContent>
-                <ButtonOnCard setShowModal={setShowModal} hideCard={hideCard}/>;
+                <ButtonOnModal setShowModal={setShowModal} hideCard={hideCard}/>;
             </IonModal>
         </Fragment>
     );

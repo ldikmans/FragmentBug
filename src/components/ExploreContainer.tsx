@@ -1,7 +1,8 @@
-import { IonButton, IonContent, IonFooter, IonGrid, IonHeader, IonItem, IonLabel, IonModal, IonTitle, IonToolbar } from '@ionic/react';
-import { Fragment, useState } from 'react';
-import ButtonOnCard from './ButtonOnCard';
+import { IonContent, IonGrid, IonHeader, IonItem, IonLabel, IonModal, IonTitle, IonToolbar } from '@ionic/react';
+import { Fragment, useEffect, useState } from 'react';
+import ButtonOnModal from './ButtonOnModal';
 import CardOnly from './CardOnly';
+import CardWithOverlay from './CardWithOverlay';
 import './ExploreContainer.css';
 import FragmentWithCardAndModal from './FragmentWithCardAndModal';
 
@@ -13,6 +14,7 @@ const ExploreContainer: React.FC<ContainerProps> = () => {
   const [showFragmentWithCardAndModal, setShowFragmentWithCardAndModal] = useState(true);
   const [showContainerModal, setShowContainerModal] = useState(false);
   const [showCardOnly, setShowCardOnly] = useState(true);
+  const [showCardWithOverlay, setShowCardWithOverlay] = useState(true)
 
   function hideFragmentwithCardAndModal() {
     setShowFragmentWithCardAndModal(false);
@@ -22,6 +24,15 @@ const ExploreContainer: React.FC<ContainerProps> = () => {
     setShowCardOnly(false);
   }
 
+  async function hideCardWithOverlay(){
+    
+    const card = document.getElementById('card-overlay') as HTMLElement;
+    //can't use this because a memory leak occurs
+    //setShowCardWithOverlay(false);
+    if(card){
+      card.style.display='none';
+    }
+  }
 
   return (
     <Fragment>
@@ -34,6 +45,11 @@ const ExploreContainer: React.FC<ContainerProps> = () => {
           <CardOnly hideCard={hideCardOnly} setShowModal={setShowContainerModal}/>
         }
 
+        {
+          showCardWithOverlay && 
+            <CardWithOverlay hideCard={hideCardWithOverlay}/>
+        }
+
       </IonGrid>
 
       <IonModal
@@ -41,8 +57,8 @@ const ExploreContainer: React.FC<ContainerProps> = () => {
         swipeToClose={true}
         onDidDismiss={() => setShowContainerModal(false)}>
         <IonHeader>
-          <IonToolbar id="modal-toolbar" className="ion-no-padding ion-no-margin">
-            <IonTitle id="modal-title-text">The modal that is in the container</IonTitle>
+          <IonToolbar>
+            <IonTitle >The modal that is in the container</IonTitle>
           </IonToolbar>
         </IonHeader>
         <IonContent scrollY={false}>
@@ -52,7 +68,7 @@ const ExploreContainer: React.FC<ContainerProps> = () => {
             </IonLabel>
           </IonItem>
         </IonContent>
-        <ButtonOnCard setShowModal={setShowContainerModal} hideCard={setShowCardOnly} />
+        <ButtonOnModal setShowModal={setShowContainerModal} hideCard={setShowCardOnly} />
       </IonModal>
     </Fragment>
 
